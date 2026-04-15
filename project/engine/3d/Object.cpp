@@ -30,13 +30,13 @@ void Object::Initialize(Camera* camera) {
 	directionalLightData->color = { 1.0f, 1.0f, 1.0f, 1.0f };
 	directionalLightData->direction = { 0.0f, -1.0f, 0.0f };
 	directionalLightData->intensity = 1.0f;
-	directionalLightData->isDisplay = true;
+	directionalLightData->isDisplay = false;
 
 	// *環境光* //
 	ambientLightResource = dxCommon_->CreateBufferResource(sizeof(AmbientLight));
 	ambientLightResource->Map(0, nullptr, reinterpret_cast<void**>(&ambientLightData));
 	// 初期値
-	ambientLightData->color = { 0.2f, 0.2f, 0.2f, 1.0f };
+	ambientLightData->color = { 1.0f, 1.0f, 1.0f, 1.0f };
 	ambientLightData->intensity = 1.0f;
 	ambientLightData->isDisplay = true;
 

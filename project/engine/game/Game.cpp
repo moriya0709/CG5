@@ -43,25 +43,12 @@ void Game::Initialize() {
 	// パーティクルマネージャ初期化
 	ParticleManager::GetInstance()->CreateParticleGroup("group1", "Resource/particle/particle.png");
 	ParticleManager::GetInstance()->CreateParticleGroup("group2", "Resource/uvChecker.png");
-	ParticleManager::GetInstance()->CreateParticleGroup("bBullet", "Resource/particle/particle.png");//弾
 
 	// .objファイルからモデル読み込み
 	ModelManager::GetInstance()->LoadModel("Resource/plane","plane.obj");
 	ModelManager::GetInstance()->LoadModel("Resource/axis", "axis.obj");
-	//ModelManager::GetInstance()->LoadModel("Resource/emission", "emission.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/player", "player.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/machine/cloud", "normalMachine.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/machine/cloud", "normalNBullet.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/machine/kamihikouki", "speedMachine.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/machine/houki", "powerMachine.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/machine/nasu", "sniperMachine.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/enemy/tometo", "tometo.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/enemy/bossGrape", "bossGrapesOnly.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/enemy/bossGrape", "bossGrapesBranch.obj");
-    ModelManager::GetInstance()->LoadModel("Resource/test", "test.obj");
-	ModelManager::GetInstance()->LoadModel("Resource/cube", "cube.obj"); // レールエディター
-	ModelManager::GetInstance()->LoadModel("Resource/rail", "rail.obj"); // レールエディター
-	//ModelManager::GetInstance()->LoadModel("skydome.obj"); 
+	ModelManager::GetInstance()->LoadModel("Resource/emission", "emission.obj");
+	ModelManager::GetInstance()->LoadModel("Resource/terrain", "terrain.obj");
 
 	// サウンド
 	SoundManager::GetInstance()->Initialize();
@@ -115,7 +102,7 @@ void Game::Draw() {
 	PostEffect::GetInstance()->PreDraw();
 
 	// レイマーチング描画
-	RayMarching::GetInstance()->Draw();
+	//RayMarching::GetInstance()->Draw();
 
 	// シーンマネージャー描画(3D)
 	SceneManager::GetInstance()->Draw3D();
@@ -123,12 +110,11 @@ void Game::Draw() {
 	// パーティクル描画
 	ParticleManager::GetInstance()->Draw();
 	// トレイルエフェクト描画
-	TrailEffectManager::GetInstance()->RenderAll();
+	//TrailEffectManager::GetInstance()->RenderAll();
 
 
 	// ポストエフェクト描画
 	PostEffect::GetInstance()->PostDraw();
-	// ② 深度バッファをPSR状態へ
 	PostEffect::GetInstance()->Draw();
 
 	// シーンマネージャー描画(2D)

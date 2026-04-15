@@ -14,25 +14,13 @@ void TitleScene::Initialize() {
 	CameraManager::GetInstance()->AddCamera("main", camera.get());
 	CameraManager::GetInstance()->SetActiveCamera("main");
 
-	// スプライト
-	sprite = std::make_unique <Sprite>();
-	sprite->Initialize("Resource/monsterBall.png");
-
 	// 3Dオブジェクト
-	for (int i = 0; i < 2; i++) {
-		object[i] = std::make_unique <Object>();
-		object[i]->Initialize(camera.get());
-	}
-
-	// Emitパーティクル発生
-	particleEmitter = std::make_unique <ParticleEmitter>();
-	particleEmitter->Initialize("group1", transformParticle, 5, 1.0f);
-	particleEmitter->Emit();
-	particleEmitter->LoadParticle("Resource/particle/fire.csv");
+	object = std::make_unique <Object>();
+	object->Initialize(camera.get());
+	object->SetTranslate({ 0.0f, -1.0f, 0.0f });
 
 	// 初期化済みの3Dオブジェクトにモデルを紐づける
-	object[0]->SetModel("emission.obj");
-	object[1]->SetModel("skydome.obj");
+	object->SetModel("terrain.obj");
 
 	// 音声再生
 	//SoundManager::GetInstance()->Play("bgm");
@@ -45,67 +33,12 @@ void TitleScene::Update() {
 	// カメラ更新
 	CameraManager::GetInstance()->Update();
 
-	// ENTERキーを押したら
-	if (input->TriggerKey(DIK_RETURN)) {
-		// ゲームプレイシーン(次シーン)を生成
-		SceneManager::GetInstance()->ChangeScene("GAMEPLAY");
-	}
-
-	// 数字の０キーが押されていたら
-	if (input->TriggerKey(DIK_0)) {
-		OutputDebugStringA("Hit 0\n"); // 出力ウィンドウに「Hit ０」と表示
-		// テクスチャ変更
-		sprite->ChangeTexture("Resource/uvChecker.png");
-		particleEmitter->SetActive("group2");
-
-		// エフェクト有効化(色反転)
-		PostEffect::GetInstance()->SetInversion(true);
-	}
-
 	// * 3Dオブジェクト* //
-	for (int i = 0; i < 2; i++) {
-		object[i]->Update();
-	}
-
-	// パーティクルエミッタ更新
-	particleEmitter->Editor();
-	particleEmitter->Update();
-
-
-	// *スプライト* //
-	// sprite更新
-	sprite->Update();
-
-#pragma region ライティング
-	// *ライティング* //
-	for (int i = 0; i < 2; i++) {
-		// 平行光
-		object[i]->SetDirectionalLight(isDirectionalLight);
-		object[i]->SetDirectionalLightDirection(DirectionalLightDirection);
-		object[i]->SetDirectionalLightColor(DirectionalLightColor);
-		object[i]->SetDirectionalLightIntensity(DirectionalLightIntensity);
-		// 環境光
-		object[i]->SetAmbientLight(isAmbientLight);
-		object[i]->SetAmbientLightColor(AmbientLightColor);
-		object[i]->SetAmbientLightIntensity(AmbientLightIntensity);
-		// ポイントライト
-		object[i]->SetPointLight(isPointLight);
-		object[i]->SetPointLightColor(PointLightColor);
-		object[i]->SetPointLightPosition(PointLightPosition);
-		object[i]->SetPointLightIntensity(PointLightIntensity);
-		// スポットライト
-		object[i]->SetSpotLight(isSpotLight);
-		object[i]->SetSpotLightColor(SpotLightColor);
-		object[i]->SetSpotLightPosition(SpotLightPosition);
-		object[i]->SetSpotLightDirection(SpotLightDirection);
-		object[i]->SetSpotLightRange(SpotLightRange);
-		object[i]->SetSpotLightIntensity(SpotLightIntensity);
-	}
-#pragma endregion
+	object->Update();
 
 #pragma region ポストエフェクト
 	// *ポストエフェクト* //
-	PostEffect::GetInstance()->Update(camera.get());
+	//PostEffect::GetInstance()->Update(camera.get());
 
 	// 反転
 	PostEffect::GetInstance()->SetInversion(isInversion);
@@ -179,57 +112,6 @@ void TitleScene::Update() {
 	ImGui::DragFloat3("cameraRotate", &cameraTransform.rotate.x, 0.01f, -10.0f, 10.0f);
 	camera->SetTranslate(cameraTransform.translate);
 	camera->SetRotate(cameraTransform.rotate);
-
-#pragma region ライティング
-	// *ライティング* //
-	ImGui::Text("Lighting"); // ライティングのテキスト
-	
-	// 平行光
-	if (ImGui::TreeNode("DirectionalLight")) {
-		ImGui::Checkbox("OnOff", &isDirectionalLight);
-		if (isDirectionalLight) {
-			ImGui::ColorEdit4("Color", &DirectionalLightColor.x);
-			ImGui::DragFloat3("Direction", &DirectionalLightDirection.x, 0.01f, -100.0f, 100.0f);
-			ImGui::DragFloat("Intensity", &DirectionalLightIntensity, 0.01f, 0.0f, 10.0f);
-		}
-		ImGui::TreePop();
-	}
-	// 環境光
-	if (ImGui::TreeNode("AmbientLight")) {
-		ImGui::Checkbox("OnOff", &isAmbientLight);
-		if (isAmbientLight) {
-			ImGui::ColorEdit4("Color", &AmbientLightColor.x);
-			ImGui::DragFloat("Intensity", &AmbientLightIntensity, 0.01f, 0.0f, 10.0f);
-		}
-
-		ImGui::TreePop();
-	}
-	// ポイントライト
-	if (ImGui::TreeNode("PointLight")) {
-		ImGui::Checkbox("OnOff", &isPointLight);
-		if (isPointLight) {
-			ImGui::ColorEdit4("Color", &PointLightColor.x);
-			ImGui::DragFloat3("Position", &PointLightPosition.x, 0.01f, -100.0f, 100.0f);
-			ImGui::DragFloat("Intensity", &PointLightIntensity, 0.01f, 0.0f, 10.0f);
-		}
-
-		ImGui::TreePop();
-	}
-	// スポットライト
-	if (ImGui::TreeNode("SpotLight")) {
-		ImGui::Checkbox("OnOff", &isSpotLight);
-		if (isSpotLight) {
-			ImGui::ColorEdit4("Color", &SpotLightColor.x);
-			ImGui::DragFloat3("Position", &SpotLightPosition.x, 0.01f, -100.0f, 100.0f);
-			ImGui::DragFloat3("Direction", &SpotLightDirection.x, 0.01f, -100.0f, 100.0f);
-			ImGui::DragFloat("Range", &SpotLightRange, 0.01f, 0.0f, 100.0f);
-			ImGui::DragFloat("Intensity", &SpotLightIntensity, 0.01f, 0.0f, 10.0f);
-		}
-
-		ImGui::TreePop();
-	}
-
-#pragma endregion
 
 #pragma region ポストエフェクト
 	// *ポストエフェクト* //
@@ -367,19 +249,13 @@ void TitleScene::Draw3D() {
 
 	
 	// 3Dオブジェクト描画
-	for (int i = 0; i < 2; i++) {
-		object[i]->Draw();
-	}
+	object->Draw();
 
 
 	// アウトライン描画準備
 	ObjectCommon::GetInstance()->SetOutlinePipelineState();
 
-	// アウトライン描画
-	for (int i = 0; i < 2; i++) {
-		object[i]->Draw();
-	}
-
+	
 }
 
 void TitleScene::Finalize() {

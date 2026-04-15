@@ -38,38 +38,6 @@ private:
 	   { 0.0f, 0.0f, 0.0f }, // rotate
 	   { 0.0f, 0.0f, -5.0f } // translate
 	};
-	// パーティクル
-	Transform transformParticle
-	{
-		{1.0f,1.0f,1.0f},
-		{0.0f,0.0f,0.0f},
-		{0.0f,0.0f,0.0f}
-	};
-
-
-	// *ライティング* //
-
-	// 平行光
-	bool isDirectionalLight = false;
-	Vector4 DirectionalLightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	Vector3 DirectionalLightDirection = { 0.0f, -1.0f, 0.0f };
-	float DirectionalLightIntensity = 1.0f;
-	// 環境光
-	bool isAmbientLight = true;
-	Vector4 AmbientLightColor = { 0.2f, 0.2f, 0.2f,1.0f};
-	float AmbientLightIntensity = 1.0f;
-	// ポイントライト
-	bool isPointLight = false;
-	Vector4 PointLightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	Vector3 PointLightPosition = { 1.0f, 1.0f, 0.0f };
-	float PointLightIntensity = 1.0f;
-	// スポットライト
-	bool isSpotLight = false;
-	Vector4 SpotLightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	Vector3 SpotLightPosition = { 0.0f, 0.0f, 0.0f };
-	Vector3 SpotLightDirection = { 0.0f, 0.0f, 0.0f };
-	float SpotLightRange = 10.0f;
-	float SpotLightIntensity = 1.0f;
 
 	// *ポストエフェクト* //
 
@@ -110,10 +78,10 @@ private:
 	float bloomBlurRadius = 1.0f;
 
 	// レンズフレア
-	bool isLensFlare = true;           // レンズフレアのON/OFF
+	bool isLensFlare = false;           // レンズフレアのON/OFF
 	int lensFlareGhostCount = 6;   // ゴーストの数（例: 4～8）
 	float lensFlareHaloWidth = 0.57f;      // ヘイロー（輪っか）の大きさ
-	bool isACES = true;                 // ACESトーンマッピングをONにする
+	bool isACES = false;                 // ACESトーンマッピングをONにする
 	float caIntensity = 0.05f;          // 色収差の強さ（最初は弱めに）
 
 	// モーションブラー
@@ -124,14 +92,14 @@ private:
 	// レイマーチング
 	//float rayMarchingTime = 0.0f; ;
 	Vector3 rayMarchingSunDir = { 0.3f, -0.5f, 0.2f };
-	float rayMarchingCloudCoverage = 1.00f;
-	float rayMarchingCloudBottom = -90.0f;
-	float rayMarchingCloudTop = 2900.0f;
+	float rayMarchingCloudCoverage = 0.00f;
+	float rayMarchingCloudBottom = 0.0f;
+	float rayMarchingCloudTop = 0.0f;
 	bool rayMarchingIsRialLight = false;
 	bool rayMarchingIsAnimeLight = true;
-	bool  rayMarchingIsMotionBlur = true;
+	bool  rayMarchingIsMotionBlur = false;
 	float  rayMarchingCloudOpacity = 0.04f;
-	bool isStorm = true;
+	bool isStorm = false;
 	float thunderFrequency = 0.3f;
 	float thunderBrightness = 120.0f;
 
@@ -140,10 +108,6 @@ private:
 	
 	// カメラ
 	std::unique_ptr<Camera> camera = nullptr;
-	// スプライト
-	std::unique_ptr <Sprite> sprite = nullptr;
 	// 3Dオブジェクト
-	std::unique_ptr <Object> object[2]{};
-	// パーティクルエミッタ
-	std::unique_ptr <ParticleEmitter> particleEmitter = nullptr;
+	std::unique_ptr <Object> object = nullptr;
 };
