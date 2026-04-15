@@ -44,7 +44,7 @@ private:
 	// 反転
 	bool isInversion = false;
 	// グレースケール
-	bool isGrayscale = false;
+	bool isGrayscale = true;
 
 
 	// 放射線ブラー
