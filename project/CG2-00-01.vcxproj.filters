@@ -94,6 +94,24 @@
     <Filter Include="シェーダー ファイル">
       <UniqueIdentifier>{e0ffc898-b446-410e-9584-86616678951b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\application\trailEffect">
+      <UniqueIdentifier>{4675c995-968e-4791-a0cb-72544ab33745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\application\rayMarching">
+      <UniqueIdentifier>{c42f9966-f47a-431b-bff5-e97d778010ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\application\railCamera">
+      <UniqueIdentifier>{3022cb31-b65e-4a05-b4f4-6f68f2d600d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\application\railCamera">
+      <UniqueIdentifier>{703e7773-767d-4862-b972-e3d2a72fb875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\application\rayMarching">
+      <UniqueIdentifier>{e526cbd5-06c0-4baf-afc9-fb4970da0867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\application\trailEffect">
+      <UniqueIdentifier>{a30b29c1-45b4-48ab-8ae8-9ff2eb2da2fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -207,17 +225,17 @@
     <ClCompile Include="application\postEffect\PostEffect.cpp">
       <Filter>ソース ファイル\application\postEffect</Filter>
     </ClCompile>
-    <ClCompile Include="application\trailEffect\TrailEffect.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="application\trailEffect\TrailEffectManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="application\railCamera\RailCamera.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\application\railCamera</Filter>
     </ClCompile>
     <ClCompile Include="application\rayMarching\RayMarching.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\application\rayMarching</Filter>
+    </ClCompile>
+    <ClCompile Include="application\trailEffect\TrailEffect.cpp">
+      <Filter>ソース ファイル\application\trailEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="application\trailEffect\TrailEffectManager.cpp">
+      <Filter>ソース ファイル\application\trailEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -373,17 +391,17 @@
     <ClInclude Include="application\postEffect\PostEffect.h">
       <Filter>ヘッダー ファイル\application\posteffect</Filter>
     </ClInclude>
-    <ClInclude Include="application\trailEffect\TrailEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="application\trailEffect\TrailEffectManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="application\railCamera\RailCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\application\railCamera</Filter>
     </ClInclude>
     <ClInclude Include="application\rayMarching\RayMarching.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\application\rayMarching</Filter>
+    </ClInclude>
+    <ClInclude Include="application\trailEffect\TrailEffect.h">
+      <Filter>ヘッダー ファイル\application\trailEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="application\trailEffect\TrailEffectManager.h">
+      <Filter>ヘッダー ファイル\application\trailEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

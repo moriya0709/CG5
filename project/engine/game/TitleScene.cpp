@@ -215,6 +215,8 @@ void TitleScene::Update() {
 #pragma endregion
 
 #pragma region レイマーチング
+	/*
+
 	// レイマーチング
 	//ImGui::DragFloat("rayMarchingTime", &rayMarchingTime, 0.1f,0.0f,10.0f);
 	ImGui::DragFloat3("rayMarchingSunDir", &rayMarchingSunDir.x, 0.01f,-1.0f,1.0f);
@@ -229,6 +231,7 @@ void TitleScene::Update() {
 	ImGui::DragFloat("thunderFrequency", &thunderFrequency, 0.001f, 0.0f, 10.0f);
 	ImGui::DragFloat("thunderBrightness", &thunderBrightness, 0.01f, 0.0f, 300.0f);
 
+	*/
 
 #pragma endregion
 
