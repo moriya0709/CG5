@@ -207,10 +207,10 @@
     <ClCompile Include="application\postEffect\PostEffect.cpp">
       <Filter>ソース ファイル\application\postEffect</Filter>
     </ClCompile>
-    <ClCompile Include="TrailEffect.cpp">
+    <ClCompile Include="application\trailEffect\TrailEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="TrailEffectManager.cpp">
+    <ClCompile Include="application\trailEffect\TrailEffectManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="application\railCamera\RailCamera.cpp">
@@ -373,10 +373,10 @@
     <ClInclude Include="application\postEffect\PostEffect.h">
       <Filter>ヘッダー ファイル\application\posteffect</Filter>
     </ClInclude>
-    <ClInclude Include="TrailEffect.h">
+    <ClInclude Include="application\trailEffect\TrailEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="TrailEffectManager.h">
+    <ClInclude Include="application\trailEffect\TrailEffectManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="application\railCamera\RailCamera.h">

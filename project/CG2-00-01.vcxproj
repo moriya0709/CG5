@@ -71,8 +71,8 @@
     <ClCompile Include="engine\game\TitleScene.cpp" />
     <ClCompile Include="engine\base\WindowAPI.cpp" />
     <ClCompile Include="application\postEffect\PostEffect.cpp" />
-    <ClCompile Include="TrailEffect.cpp" />
-    <ClCompile Include="TrailEffectManager.cpp" />
+    <ClCompile Include="application\trailEffect\TrailEffect.cpp" />
+    <ClCompile Include="application\trailEffect\TrailEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resource\shaders\PostEffect.PS.hlsl">
@@ -181,8 +181,8 @@
     <ClInclude Include="engine\game\TitleScene.h" />
     <ClInclude Include="engine\base\WindowAPI.h" />
     <ClInclude Include="application\postEffect\PostEffect.h" />
-    <ClInclude Include="TrailEffect.h" />
-    <ClInclude Include="TrailEffectManager.h" />
+    <ClInclude Include="application\trailEffect\TrailEffect.h" />
+    <ClInclude Include="application\trailEffect\TrailEffectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />
@@ -275,7 +275,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>C:\CG2-00-01\externals\DirectXTex;$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\audio;$(ProjectDir)engine\base;$(ProjectDir)engine\io;$(ProjectDir)engine\math;$(ProjectDir)engine\game;$(ProjectDir)engine\scene;$(ProjectDir)engine\camera;$(ProjectDir)application\postEffect;$(ProjectDir)application\railCamera;$(ProjectDir)application\\rayMarching</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\CG2-00-01\externals\DirectXTex;$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\audio;$(ProjectDir)engine\base;$(ProjectDir)engine\io;$(ProjectDir)engine\math;$(ProjectDir)engine\game;$(ProjectDir)engine\scene;$(ProjectDir)engine\camera;$(ProjectDir)application\postEffect;$(ProjectDir)application\railCamera;$(ProjectDir)application\rayMarching;$(ProjectDir)application\trailEffect</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
