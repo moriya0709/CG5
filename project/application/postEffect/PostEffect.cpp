@@ -333,8 +333,7 @@ void PostEffect::Draw() {
 	cmdList->OMSetRenderTargets(1, &lensFlareRenderTarget_.rtvHandle, FALSE, nullptr);
 
 	// 黒でクリア（前のフレームの残像を消す）
-	float clearColorBlack[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	cmdList->ClearRenderTargetView(lensFlareRenderTarget_.rtvHandle, clearColorBlack, 0, nullptr);
+	cmdList->ClearRenderTargetView(lensFlareRenderTarget_.rtvHandle, clearColor, 0, nullptr);
 
 	// ★入力画像として「高輝度抽出したテクスチャ(ブルームの最初の画像)」を t0 に渡す
 	cmdList->SetGraphicsRootDescriptorTable(0, bloomBuffers_[0].lumRenderTarget.srvGpuHandle);

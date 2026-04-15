@@ -85,7 +85,7 @@ private:
 	float caIntensity = 0.05f;          // 色収差の強さ（最初は弱めに）
 
 	// モーションブラー
-	bool isMotionBlur = true;    // モーションブラーのON/OFF
+	bool isMotionBlur = false;    // モーションブラーのON/OFF
 	int motionBlurSamples = 16; // サンプル数（例：8〜16）
 	float motionBlurScale = 1.0f;   // ブラーの強さ
 
