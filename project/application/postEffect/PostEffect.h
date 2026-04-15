@@ -188,7 +188,7 @@ private:
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];
 
 	// クリアカラー
-	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float clearColor[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
 	D3D12_RESOURCE_STATES currentState_;
 
 	// *エフェクト切り換え用* //
