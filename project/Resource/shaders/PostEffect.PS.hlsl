@@ -88,9 +88,10 @@ struct EffectData
     
     float3 vignetteColor;
     
-    // スムージング
-    int isSmoothing;
-    float smoothingRadius; // ぼかしの強さ
+    // ガウシアンフィルタ
+    int isGaussianFilter;
+    float gaussianSigma; // ぼかしの強さ
+    
     float2 pad7;
     
 };
@@ -117,23 +118,42 @@ struct SunAndCloudParam
 };
 ConstantBuffer<SunAndCloudParam> gSunCloudData : register(b2);
 
-// スペクトル関数
-float3 SampleGaussian(Texture2D<float4> tex, SamplerState samp, float2 uv, float2 texelSize, float blurSigma)
+// ガウシアンフィルタ
+float3 ApplyGaussianFilter(Texture2D<float4> tex, SamplerState samp, float2 uv, float2 texelSize, float sigma)
 {
-    float3 result = 0;
-    float totalWeight = 0;
-    // 3x3の簡易ガウスカーネル
-    const float kernel[3] = { 0.227027, 0.316216, 0.070270 };
-    for (int x = -1; x <= 1; ++x)
+    float3 result = 0.0f;
+    float totalWeight = 0.0f;
+
+    // シグマが小さすぎる場合は元の色を返す（ゼロ除算防止）
+    if (sigma < 0.1f)
     {
-        for (int y = -1; y <= 1; ++y)
-        {
-            float2 offset = float2(x, y) * texelSize * blurSigma;
-            float weight = kernel[abs(x)] * kernel[abs(y)];
-            result += tex.Sample(samp, uv + offset).rgb * weight;
-            totalWeight += weight;
-        }
+        return tex.SampleLevel(samp, uv, 0).rgb;
     }
+
+    // サンプリングの最大半径（シグマの約2.5倍の範囲を取れば、ガウス分布の大部分をカバーできます）
+    float maxRadius = sigma * 2.5f;
+    float twoSigmaSquare = 2.0f * sigma * sigma;
+
+    // サンプル数（32回ならかなり高品質です。重い場合は 16 や 24 に減らしてください）
+    const int SAMPLE_COUNT = 32;
+    const float GOLDEN_ANGLE = 2.39996323f; // 黄金角 (ラジアン)
+
+    for (int i = 0; i < SAMPLE_COUNT; ++i)
+    {
+        // 円の面積に対して均等にサンプル点を配置
+        float r = sqrt((float) i / (float) SAMPLE_COUNT) * maxRadius;
+        float theta = i * GOLDEN_ANGLE;
+
+        // XYのオフセットを計算
+        float2 offset = float2(cos(theta), sin(theta)) * r * texelSize;
+
+        // 中心からの距離 r に基づくガウス重み計算
+        float weight = exp(-(r * r) / twoSigmaSquare);
+
+        result += tex.SampleLevel(samp, saturate(uv + offset), 0).rgb * weight;
+        totalWeight += weight;
+    }
+
     return result / totalWeight;
 }
 
@@ -267,9 +287,9 @@ float4 main(VSOutput input) : SV_TARGET
                 float baseSigma = 3.0f + (float) i * 1.5f;
                 float blurSigma = baseSigma * lerp(1.0f, 1.2f, lerpFactor);
                 
-                float r = SampleGaussian(gBloom3Texture, gSampler, saturate(offset + caOffset), texelSize, blurSigma).r;
-                float g = SampleGaussian(gBloom3Texture, gSampler, saturate(offset), texelSize, blurSigma).g;
-                float b = SampleGaussian(gBloom3Texture, gSampler, saturate(offset - caOffset), texelSize, blurSigma).b;
+                float r = ApplyGaussianFilter(gBloom3Texture, gSampler, saturate(offset + caOffset), texelSize, blurSigma).r;
+                float g = ApplyGaussianFilter(gBloom3Texture, gSampler, saturate(offset), texelSize, blurSigma).g;
+                float b = ApplyGaussianFilter(gBloom3Texture, gSampler, saturate(offset - caOffset), texelSize, blurSigma).b;
                 
                 float weight = pow(1.0f - (float(i) / max(1.0f, float(numGhosts))), 3.0f);
                 
@@ -344,14 +364,14 @@ float4 main(VSOutput input) : SV_TARGET
         }
         
         // 画面全体のスムージング
-        if (gEffectData.isSmoothing)
+        if (gEffectData.isGaussianFilter)
         {
             uint width, height;
             gCurrentTexture.GetDimensions(width, height);
             float2 texelSize = (width > 0 && height > 0) ? (1.0f / float2(width, height)) : float2(0.001f, 0.001f);
             
             // 画像をぼかす
-            color.rgb = SampleGaussian(gCurrentTexture, gSampler, input.uv, texelSize, gEffectData.smoothingRadius);
+            color.rgb = ApplyGaussianFilter(gCurrentTexture, gSampler, input.uv, texelSize, gEffectData.gaussianSigma);
         }
         
         // 放射状ブラー
