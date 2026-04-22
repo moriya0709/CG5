@@ -87,6 +87,9 @@ void TitleScene::Update() {
 	PostEffect::GetInstance()->SetVignette(isVignette);
 	PostEffect::GetInstance()->SetVignetteIntensity(vignetteIntensity);
 	PostEffect::GetInstance()->SetVignetteColor(vignetteColor);
+	// スムージング
+	PostEffect::GetInstance()->SetSmoothing(isSmoothing);
+	PostEffect::GetInstance()->SetSmoothingRadius(smoothingRadius);
 
 #pragma endregion
 
@@ -220,7 +223,7 @@ void TitleScene::Update() {
 	}
 	// 色収差
 	if (ImGui::TreeNode("CA")) {
-		ImGui::Checkbox("isFullScreenCA", &isFullScreenCA);
+		ImGui::Checkbox("OnOff", &isFullScreenCA);
 		
 		if (isFullScreenCA)
 		ImGui::DragFloat("fullScreenCAIntensity", &fullScreenCAIntensity, 0.001f, 0.0f, 10.0f);
@@ -229,10 +232,18 @@ void TitleScene::Update() {
 	}
 	// ビネット
 	if (ImGui::TreeNode("Vignette")) {
-		ImGui::Checkbox("isVignette", &isVignette);
+		ImGui::Checkbox("OnOff", &isVignette);
 		if (isVignette) {
 			ImGui::DragFloat("vignetteIntensity", &vignetteIntensity, 0.01f, 0.0f, 1.0f);
 			ImGui::ColorEdit3("vignetteColor", &vignetteColor.x);
+		}
+		ImGui::TreePop();
+	}
+	// スムージング
+	if (ImGui::TreeNode("Smoothing")) {
+		ImGui::Checkbox("OnOff", &isSmoothing);
+		if (isSmoothing) {
+			ImGui::DragFloat("smoothingRadius", &smoothingRadius, 0.01f, 0.0f, 10.0f);
 		}
 		ImGui::TreePop();
 	}
