@@ -87,7 +87,11 @@ struct EffectData
     
     
     float3 vignetteColor;
-    float pad7;
+    
+    // スムージング
+    int isSmoothing;
+    float smoothingRadius; // ぼかしの強さ
+    float2 pad7;
     
 };
 ConstantBuffer<EffectData> gEffectData : register(b0);
@@ -337,6 +341,17 @@ float4 main(VSOutput input) : SV_TARGET
 
             // 合成
             color.rgb = lerp(color.rgb, gEffectData.vignetteColor, vignetteWeight);
+        }
+        
+        // 画面全体のスムージング
+        if (gEffectData.isSmoothing)
+        {
+            uint width, height;
+            gCurrentTexture.GetDimensions(width, height);
+            float2 texelSize = (width > 0 && height > 0) ? (1.0f / float2(width, height)) : float2(0.001f, 0.001f);
+            
+            // 画像をぼかす
+            color.rgb = SampleGaussian(gCurrentTexture, gSampler, input.uv, texelSize, gEffectData.smoothingRadius);
         }
         
         // 放射状ブラー

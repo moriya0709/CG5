@@ -94,9 +94,13 @@ private:
 	float fullScreenCAIntensity = 0.02f; // 画面全体の色収差の強さ
 
 	// ビネット
-	bool isVignette = true; // ビネットON/OFF
+	bool isVignette = false; // ビネットON/OFF
 	float vignetteIntensity = 1.0f; // ビネットの強さ
 	Vector3 vignetteColor = { 1.0f, 0.0f, 0.0f }; // ビネットの色
+
+	// スムージング
+	bool isSmoothing = true;
+	float smoothingRadius = 2.0f;
 
 
 	// レイマーチング

@@ -172,7 +172,7 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, WindowAPI* windowAPI, SrvMa
 	effectData->isACES = true;                 // ACESトーンマッピングをONにする
 	effectData->caIntensity = 0.003f;          // 色収差の強さ（最初は弱めに）
 	// モーションブラー
-	effectData->isMotionBlur = true;    // モーションブラーのON/OFF
+	effectData->isMotionBlur = false;    // モーションブラーのON/OFF
 	effectData->motionBlurSamples = 8; // サンプル数（例：8〜16）
 	effectData->motionBlurScale = 1.0f;   // ブラーの強さ
 	// 色収差
@@ -182,6 +182,9 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, WindowAPI* windowAPI, SrvMa
 	effectData->isVignette = false; // ビネットON/OFF
 	effectData->vignetteIntensity = 0.5f; // ビネットの強さ
 	effectData->vignetteColor = { 0.0f,0.0f,0.0f }; // ビネットの色
+	// スムージング
+	effectData->isSmoothing = false; // スムージングON/OFF
+	effectData->smoothingRadius = 1.0f; // スムージングのぼかしの強さ
 
 	effectData->intensity = 1.0f;
 

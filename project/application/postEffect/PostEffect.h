@@ -90,7 +90,11 @@ struct EffectData {
 	float vignetteIntensity;
 
 	Vector3 vignetteColor;
-	float pad7;
+
+	// スムージング
+	int isSmoothing;
+	float smoothingRadius; // ぼかしの強さ
+	Vector2 pad7;
 
 };
 
@@ -170,6 +174,9 @@ public:
 	void SetVignette(bool isVignette) { effectData->isVignette = isVignette; }
 	void SetVignetteIntensity(float intensity) { effectData->vignetteIntensity = intensity; }
 	void SetVignetteColor(const Vector3& color) { effectData->vignetteColor = color; }
+	// スムージング
+	void SetSmoothing(bool isSmoothing) { effectData->isSmoothing = isSmoothing; }
+	void SetSmoothingRadius(float radius) { effectData->smoothingRadius = radius; }
 
 	// ダメージエフェクト
 	void SetDamageEffectRatio(float ratio) { damageEffectRatio_ = ratio; }
