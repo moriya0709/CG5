@@ -44,7 +44,7 @@ private:
 	// 反転
 	bool isInversion = false;
 	// グレースケール
-	bool isGrayscale = true;
+	bool isGrayscale = false;
 
 
 	// 放射線ブラー
@@ -88,6 +88,16 @@ private:
 	bool isMotionBlur = false;    // モーションブラーのON/OFF
 	int motionBlurSamples = 16; // サンプル数（例：8〜16）
 	float motionBlurScale = 1.0f;   // ブラーの強さ
+
+	// 色収差
+	bool isFullScreenCA = false; // 画面全体の色収差ON/OFF
+	float fullScreenCAIntensity = 0.02f; // 画面全体の色収差の強さ
+
+	// ビネット
+	bool isVignette = true; // ビネットON/OFF
+	float vignetteIntensity = 1.0f; // ビネットの強さ
+	Vector3 vignetteColor = { 1.0f, 0.0f, 0.0f }; // ビネットの色
+
 
 	// レイマーチング
 	//float rayMarchingTime = 0.0f; ;

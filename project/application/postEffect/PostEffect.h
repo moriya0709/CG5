@@ -82,6 +82,16 @@ struct EffectData {
 	float motionBlurScale;
 	float pad6;
 
+	// 色収差
+	int isFullScreenCA; // 画面全体の色収差ON/OFF
+	float fullScreenCAIntensity; // 画面全体の色収差の強さ
+	// ビネット
+	int isVignette;
+	float vignetteIntensity;
+
+	Vector3 vignetteColor;
+	float pad7;
+
 };
 
 // 各パスのレンダーターゲットとSRVインデックスをまとめる構造体
@@ -122,7 +132,7 @@ public:
 	void SetDistanceFogColor(const Vector3& color) { effectData->distanceFogColor = color; }
 	void SetDistanceFogStart(float start) { effectData->distanceFogStart = start; }
 	void SetDistanceFogEnd(float end) { effectData->distanceFogEnd = end; }
-	
+
 	// ハイトフォグ
 	void SetHeightFog(bool isFog) { effectData->isHeightFog = isFog; }
 	void SetHeightFogColor(const Vector3& color) { effectData->heightFogColor = color; }
@@ -139,8 +149,8 @@ public:
 	void SetBokehRadius(float radius) { effectData->bokehRadius = radius; }
 
 	// ブルーム
-	void SetBloomThreshold(float bloomThreshold) {effectData->bloomThreshold = bloomThreshold;}
-	void SetBloomIntensity(float bloomIntensity) {effectData->bloomIntensity = bloomIntensity;}
+	void SetBloomThreshold(float bloomThreshold) { effectData->bloomThreshold = bloomThreshold; }
+	void SetBloomIntensity(float bloomIntensity) { effectData->bloomIntensity = bloomIntensity; }
 	void SetBloomBlurRadius(float bloomBlurRadius) { effectData->bloomBlurRadius = bloomBlurRadius; }
 	// レンズフレア
 	void SetLensFlare(bool isLensFlare) { effectData->isLensFlare = isLensFlare; }
@@ -151,13 +161,23 @@ public:
 	void SetIsACES(bool isACES) { effectData->isACES = isACES; } // ACES
 	// モーションブラー
 	void SetMotionBlur(bool isMotionBlur) { effectData->isMotionBlur = isMotionBlur; }
-	void SetMotionBlurSamples(int motionBlurSamples) { effectData->motionBlurSamples = motionBlurSamples;}
-	void SetMotionBlurScale(float motionBlurScale) {effectData->motionBlurScale = motionBlurScale;}
+	void SetMotionBlurSamples(int motionBlurSamples) { effectData->motionBlurSamples = motionBlurSamples; }
+	void SetMotionBlurScale(float motionBlurScale) { effectData->motionBlurScale = motionBlurScale; }
+	// 色収差
+	void SetFullScreenCA(bool isFullScreenCA) { effectData->isFullScreenCA = isFullScreenCA; }
+	void SetFullScreenCAIntensity(float intensity) { effectData->fullScreenCAIntensity = intensity; }
+	// ビネット
+	void SetVignette(bool isVignette) { effectData->isVignette = isVignette; }
+	void SetVignetteIntensity(float intensity) { effectData->vignetteIntensity = intensity; }
+	void SetVignetteColor(const Vector3& color) { effectData->vignetteColor = color; }
+
+	// ダメージエフェクト
+	void SetDamageEffectRatio(float ratio) { damageEffectRatio_ = ratio; }
 
 	// getter
 	float GetLensFlareGhostDispersal() { return effectData->lensFlareGhostDispersal; }
 	D3D12_CPU_DESCRIPTOR_HANDLE GetRtvHandle(uint32_t index) { return rtvHandles[index]; }
-	
+
 	// シングルトンインスタンスの取得
 	static PostEffect* GetInstance();
 
@@ -214,6 +234,9 @@ private:
 	uint32_t lensFlareSrvIndex_ = 0;
 	// モーションブラー
 	uint32_t velocitySrvIndex_ = 0; // ベロシティバッファ(t6)用
+	// ダメージエフェクト
+	bool isDamegeFade = true; // フェードアウト
+	float damageEffectRatio_ = 0.0f; // 0.0fでエフェクト無し、1.0fで最大ダメージ表現
 
 	// ポインター
 	DirectXCommon* dxCommon_ = nullptr;

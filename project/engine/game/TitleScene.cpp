@@ -80,6 +80,13 @@ void TitleScene::Update() {
 	PostEffect::GetInstance()->SetMotionBlur(isMotionBlur);
 	PostEffect::GetInstance()->SetMotionBlurSamples(motionBlurSamples);
 	PostEffect::GetInstance()->SetMotionBlurScale(motionBlurScale);
+	// 色収差
+	PostEffect::GetInstance()->SetFullScreenCA(isFullScreenCA);
+	PostEffect::GetInstance()->SetFullScreenCAIntensity(fullScreenCAIntensity);
+	// ビネット
+	PostEffect::GetInstance()->SetVignette(isVignette);
+	PostEffect::GetInstance()->SetVignetteIntensity(vignetteIntensity);
+	PostEffect::GetInstance()->SetVignetteColor(vignetteColor);
 
 #pragma endregion
 
@@ -211,6 +218,25 @@ void TitleScene::Update() {
 
 		ImGui::TreePop();
 	}
+	// 色収差
+	if (ImGui::TreeNode("CA")) {
+		ImGui::Checkbox("isFullScreenCA", &isFullScreenCA);
+		
+		if (isFullScreenCA)
+		ImGui::DragFloat("fullScreenCAIntensity", &fullScreenCAIntensity, 0.001f, 0.0f, 10.0f);
+		
+		ImGui::TreePop();
+	}
+	// ビネット
+	if (ImGui::TreeNode("Vignette")) {
+		ImGui::Checkbox("isVignette", &isVignette);
+		if (isVignette) {
+			ImGui::DragFloat("vignetteIntensity", &vignetteIntensity, 0.01f, 0.0f, 1.0f);
+			ImGui::ColorEdit3("vignetteColor", &vignetteColor.x);
+		}
+		ImGui::TreePop();
+	}
+
 
 #pragma endregion
 
