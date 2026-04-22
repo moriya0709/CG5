@@ -87,9 +87,9 @@ void TitleScene::Update() {
 	PostEffect::GetInstance()->SetVignette(isVignette);
 	PostEffect::GetInstance()->SetVignetteIntensity(vignetteIntensity);
 	PostEffect::GetInstance()->SetVignetteColor(vignetteColor);
-	// スムージング
-	PostEffect::GetInstance()->SetSmoothing(isSmoothing);
-	PostEffect::GetInstance()->SetSmoothingRadius(smoothingRadius);
+	// ガウシアンフィルタ
+	PostEffect::GetInstance()->SetGaussianFilter(isGaussianFilter);
+	PostEffect::GetInstance()->SetGaussianSigma(gaussianSigma);
 
 #pragma endregion
 
@@ -239,11 +239,11 @@ void TitleScene::Update() {
 		}
 		ImGui::TreePop();
 	}
-	// スムージング
-	if (ImGui::TreeNode("Smoothing")) {
-		ImGui::Checkbox("OnOff", &isSmoothing);
-		if (isSmoothing) {
-			ImGui::DragFloat("smoothingRadius", &smoothingRadius, 0.01f, 0.0f, 10.0f);
+	// ガウシアンフィルタ
+	if (ImGui::TreeNode("GaussianFilter")) {
+		ImGui::Checkbox("OnOff", &isGaussianFilter);
+		if (isGaussianFilter) {
+			ImGui::DragFloat("gaussianSigma", &gaussianSigma, 0.01f, 0.0f, 10.0f);
 		}
 		ImGui::TreePop();
 	}

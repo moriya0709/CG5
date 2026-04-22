@@ -98,9 +98,9 @@ private:
 	float vignetteIntensity = 1.0f; // ビネットの強さ
 	Vector3 vignetteColor = { 1.0f, 0.0f, 0.0f }; // ビネットの色
 
-	// スムージング
-	bool isSmoothing = true;
-	float smoothingRadius = 2.0f;
+	// ガウシアンフィルタ
+	bool isGaussianFilter = true;
+	float gaussianSigma = 2.0f;
 
 
 	// レイマーチング

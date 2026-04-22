@@ -91,9 +91,10 @@ struct EffectData {
 
 	Vector3 vignetteColor;
 
-	// スムージング
-	int isSmoothing;
-	float smoothingRadius; // ぼかしの強さ
+	// ガウシアンフィルタ
+	int isGaussianFilter;
+	float gaussianSigma; // ぼかしの強さ（例: 1.0f ～ 10.0f など大きくしても線が出ません）
+
 	Vector2 pad7;
 
 };
@@ -174,9 +175,9 @@ public:
 	void SetVignette(bool isVignette) { effectData->isVignette = isVignette; }
 	void SetVignetteIntensity(float intensity) { effectData->vignetteIntensity = intensity; }
 	void SetVignetteColor(const Vector3& color) { effectData->vignetteColor = color; }
-	// スムージング
-	void SetSmoothing(bool isSmoothing) { effectData->isSmoothing = isSmoothing; }
-	void SetSmoothingRadius(float radius) { effectData->smoothingRadius = radius; }
+	// ガウシアンフィルタ
+	void SetGaussianFilter(bool isGaussianFilter) { effectData->isGaussianFilter = isGaussianFilter; }
+	void SetGaussianSigma(float gaussianSigma) { effectData->gaussianSigma = gaussianSigma; }
 
 	// ダメージエフェクト
 	void SetDamageEffectRatio(float ratio) { damageEffectRatio_ = ratio; }

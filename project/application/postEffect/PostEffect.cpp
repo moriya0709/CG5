@@ -182,9 +182,9 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, WindowAPI* windowAPI, SrvMa
 	effectData->isVignette = false; // ビネットON/OFF
 	effectData->vignetteIntensity = 0.5f; // ビネットの強さ
 	effectData->vignetteColor = { 0.0f,0.0f,0.0f }; // ビネットの色
-	// スムージング
-	effectData->isSmoothing = false; // スムージングON/OFF
-	effectData->smoothingRadius = 1.0f; // スムージングのぼかしの強さ
+	// ガウシアンフィルタ
+	effectData->isGaussianFilter = false; // ガウシアンフィルタON/OFF
+	effectData->gaussianSigma = 1.0f; // ガウシアンフィルタのぼかしの強さ
 
 	effectData->intensity = 1.0f;
 
