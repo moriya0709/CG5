@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="imgui">
       <UniqueIdentifier>{04c4bd0d-d3e5-49dd-ac80-1d009c5975f9}</UniqueIdentifier>
     </Filter>
@@ -42,9 +38,6 @@
     </Filter>
     <Filter Include="ソース ファイル\application">
       <UniqueIdentifier>{072b86a8-c276-4c17-aad4-db9733cfb2c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\shaders">
-      <UniqueIdentifier>{b1525c88-bca6-4b5d-84cd-3f0dd8ceff67}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\engine\game">
       <UniqueIdentifier>{97e24b88-2ef6-4db3-8666-a97a2e6e4215}</UniqueIdentifier>

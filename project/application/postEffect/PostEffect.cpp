@@ -175,6 +175,13 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, WindowAPI* windowAPI, SrvMa
 	effectData->isMotionBlur = true;    // モーションブラーのON/OFF
 	effectData->motionBlurSamples = 8; // サンプル数（例：8〜16）
 	effectData->motionBlurScale = 1.0f;   // ブラーの強さ
+	// 色収差
+	effectData->isFullScreenCA = false; // 画面全体の色収差ON/OFF
+	effectData->fullScreenCAIntensity = 0.02f; // 画面全体の色収差の強さ
+	// ビネット
+	effectData->isVignette = false; // ビネットON/OFF
+	effectData->vignetteIntensity = 0.5f; // ビネットの強さ
+	effectData->vignetteColor = { 0.0f,0.0f,0.0f }; // ビネットの色
 
 	effectData->intensity = 1.0f;
 
