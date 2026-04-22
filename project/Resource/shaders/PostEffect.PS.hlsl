@@ -18,81 +18,92 @@ struct PSInput
 
 struct EffectData
 {
-    int isInversion; // B0
+    // [16 bytes]
+    int isInversion;
     int isGrayscale;
     int isRadialBlur;
     int isDistanceFog;
 
-    int isDOF; // B1
+    // [16 bytes]
+    int isDOF;
     int isHeightFog;
     float intensity;
     float pad0;
 
-    float2 blurCenter; // B2
+    // [16 bytes]
+    float2 blurCenter;
     float blurWidth;
     int blurSamples;
 
-    float3 distanceFogColor; // B3
+    // [16 bytes]
+    float3 distanceFogColor;
     float distanceFogStart;
 
-    float distanceFogEnd; // B4
+    // [16 bytes]
+    float distanceFogEnd;
     float zNear;
     float zFar;
     float pad1;
 
-    // *ハイトフォグ* //
-    float3 heightFogColor; // B5
+    // [16 bytes]
+    float3 heightFogColor;
     float heightFogTop;
 
-    float heightFogBottom; // B6
+    // [16 bytes]
+    float heightFogBottom;
     float heightFogDensity;
     float2 pad2;
 
-    float4x4 matInverseViewProjection; // B7-10
+    // [64 bytes]
+    float4x4 matInverseViewProjection;
 
-    // *DoF* //
-    float focusDistance; // B11
+    // [16 bytes]
+    float focusDistance;
     float focusRange;
     float bokehRadius;
     float pad3;
 
-    // *ブルーム* //
-    float bloomThreshold; // 光らせる明るさの閾値
-    float bloomIntensity; // ブルームの強さ
-    float bloomBlurRadius; // ★新規追加：ブルームのぼかし半径（広がり具合）
-    float pad4; // パディングを1つに減らす
-    
-    // *レンズフレア* //
-    int isLensFlare; // レンズフレアのON/OFF
-    int lensFlareGhostCount; // ゴーストの数
-    float lensFlareGhostDispersal; // ゴーストの広がり具合
-    float lensFlareHaloWidth; // ヘイローの大きさ
-    
-    int isACES; // ACESトーンマッピングのON/OFF
-    float caIntensity; // 色収差の強さ (0.001f とかが綺麗)
-    float2 pad5; // パディング
-    
-    // *モーションブラー* //
+    // [16 bytes]
+    float bloomThreshold;
+    float bloomIntensity;
+    float bloomBlurRadius;
+    float pad4;
+
+    // [16 bytes]
+    int isLensFlare;
+    int lensFlareGhostCount;
+    float lensFlareGhostDispersal;
+    float lensFlareHaloWidth;
+
+    // [16 bytes]
+    int isACES;
+    float caIntensity;
+    float2 pad5;
+
+    // [16 bytes]
     int isMotionBlur;
     int motionBlurSamples;
     float motionBlurScale;
     float pad6;
-    
-    // 色収差
-    int isFullScreenCA; // 画面全体の色収差ON/OFF
-    float fullScreenCAIntensity; // 画面全体の色収差の強さ
-    // ビネット
+
+    // [16 bytes]
+    int isFullScreenCA;
+    float fullScreenCAIntensity;
     int isVignette;
     float vignetteIntensity;
-    
-    
+
+    // [16 bytes]
     float3 vignetteColor;
-    
-    // ガウシアンフィルタ
     int isGaussianFilter;
-    float gaussianSigma; // ぼかしの強さ
-    
-    float2 pad7;
+
+    // [16 bytes]
+    float gaussianSigma;
+    int isOutline;
+    float outlineThreshold;
+    float pad7;
+
+    // [16 bytes]
+    float4 outlineColor;
     
 };
 ConstantBuffer<EffectData> gEffectData : register(b0);
@@ -191,6 +202,39 @@ float3 SampleWithCA(Texture2D<float4> tex, SamplerState samp,
     float g = tex.Sample(samp, saturate(uv + caDir * caScale * 0.5f)).g;
     float b = tex.Sample(samp, saturate(uv - caDir * caScale * 0.5f)).b;
     return float3(r, g, b);
+}
+
+// 深度値を線形化（実際の距離に変換）する関数
+float LinearizeDepth(float depth, float zNear, float zFar)
+{
+    // DirectXの一般的なZバッファ(0.0～1.0)を距離に変換
+    return (zNear * zFar) / (zFar - depth * (zFar - zNear));
+}
+
+// Sobelフィルタを使って深度からエッジ（輪郭）を検出する関数（生深度バージョン）
+float DetectEdge(Texture2D<float> depthTex, SamplerState samp, float2 uv, float2 texelSize, float threshold)
+{
+    float2 offsets[9] =
+    {
+        float2(-1, -1), float2(0, -1), float2(1, -1),
+        float2(-1, 0), float2(0, 0), float2(1, 0),
+        float2(-1, 1), float2(0, 1), float2(1, 1)
+    };
+
+    float depths[9];
+    for (int i = 0; i < 9; ++i)
+    {
+        // LinearizeDepthを通さず、生のZ値(0.0～1.0)をそのまま使う
+        depths[i] = depthTex.SampleLevel(samp, saturate(uv + offsets[i] * texelSize), 0).r;
+    }
+
+    float Gx = depths[0] - depths[2] + 2.0f * depths[3] - 2.0f * depths[5] + depths[6] - depths[8];
+    float Gy = depths[0] + 2.0f * depths[1] + depths[2] - depths[6] - 2.0f * depths[7] - depths[8];
+
+    float edge = sqrt(Gx * Gx + Gy * Gy);
+
+    // 閾値を超えたら 1.0 (線)、それ以外は 0.0 とする
+    return step(threshold, edge);
 }
 
 float4 main(VSOutput input) : SV_TARGET
@@ -510,6 +554,30 @@ float4 main(VSOutput input) : SV_TARGET
         {
             float gray = dot(color.rgb, float3(0.2126, 0.7152, 0.0722));
             color.rgb = float3(gray, gray, gray);
+        }
+        
+      // 深度ベースのアウトライン (本番用・パラメータ検証)
+        if (gEffectData.isOutline)
+        {
+            uint width, height;
+            gDepthTexture.GetDimensions(width, height);
+            float2 texelSize = (width > 0 && height > 0) ? (1.0f / float2(width, height)) : float2(0.001f, 0.001f);
+
+            // 【テスト】C++からの値を一時的に無視して、確実に線が出る値を強制セットする
+            //float testThreshold = 0.0005f; // 非常に小さな閾値
+            //float4 testColor = float4(1.0f, 0.0f, 0.0f, 1.0f); // 真っ赤 ＆ 不透明(1.0f)
+
+            // gEffectData.outlineThreshold の代わりに testThreshold を使う
+            float edge = DetectEdge(
+                gDepthTexture,
+                gSampler,
+                input.uv,
+                texelSize,
+                gEffectData.outlineThreshold
+            );
+
+            // gEffectData.outlineColor の代わりに testColor を使う
+            color.rgb = lerp(color.rgb, gEffectData.outlineColor.rgb, edge * gEffectData.outlineColor.a);
         }
 
         color.rgb *= gEffectData.intensity;

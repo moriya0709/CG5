@@ -102,6 +102,11 @@ private:
 	bool isGaussianFilter = true;
 	float gaussianSigma = 2.0f;
 
+	// アウトライン
+	bool isOutline = true;
+	float outlineThreshold = 0.001f;
+	Vector4 outlineColor = { 1.0f, 0.0f, 0.0f, 1.0f };
+
 
 	// レイマーチング
 	//float rayMarchingTime = 0.0f; ;

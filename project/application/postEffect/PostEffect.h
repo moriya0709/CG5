@@ -24,78 +24,92 @@ struct RenderTarget {
 
 // C++側の構造体 (PostEffect.h など)
 struct EffectData {
-	int32_t isInversion; // B0
+	// [16 bytes] 基本フラグ群
+	int32_t isInversion;
 	int32_t isGrayscale;
 	int32_t isRadialBlur;
 	int32_t isDistanceFog;
 
-	int32_t isDOF; // B1
+	// [16 bytes] DOF・ハイトフォグフラグ等
+	int32_t isDOF;
 	int32_t isHeightFog;
 	float intensity;
 	float pad0;
 
-	Vector2 blurCenter; // B2 (※プロジェクトの型に合わせてください XMFLOAT2など)
-	float blurWidth;
-	int32_t blurSamples;
+	// [16 bytes] ブラー設定
+	Vector2 blurCenter; // 8 bytes
+	float blurWidth;    // 4 bytes
+	int32_t blurSamples;// 4 bytes
 
-	Vector3 distanceFogColor; // B3
-	float distanceFogStart;
+	// [16 bytes] 距離フォグ設定1
+	Vector3 distanceFogColor; // 12 bytes
+	float distanceFogStart;   // 4 bytes
 
-	float distanceFogEnd; // B4
-	float zNear;
-	float zFar;
-	float pad1;
+	// [16 bytes] 距離フォグ設定2 & カメラ設定
+	float distanceFogEnd; // 4 bytes
+	float zNear;          // 4 bytes
+	float zFar;           // 4 bytes
+	float pad1;           // 4 bytes
 
-	Vector3 heightFogColor; // B5
-	float heightFogTop;
+	// [16 bytes] ハイトフォグ設定1
+	Vector3 heightFogColor; // 12 bytes
+	float heightFogTop;     // 4 bytes
 
-	float heightFogBottom; // B6
-	float heightFogDensity;
-	Vector2 pad2;
+	// [16 bytes] ハイトフォグ設定2
+	float heightFogBottom;  // 4 bytes
+	float heightFogDensity; // 4 bytes
+	Vector2 pad2;           // 8 bytes
 
-	Matrix4x4 matInverseViewProjection; // B7-10
+	// [64 bytes] 行列
+	Matrix4x4 matInverseViewProjection;
 
-	float focusDistance; // B11
+	// [16 bytes] DOF設定
+	float focusDistance;
 	float focusRange;
 	float bokehRadius;
 	float pad3;
 
-	// *ブルーム* //
+	// [16 bytes] ブルーム設定
 	float bloomThreshold;
 	float bloomIntensity;
-	float bloomBlurRadius; // ★ ここがC++側に無かったり、順番が違うと以降が全てズレます！
+	float bloomBlurRadius;
 	float pad4;
 
-	// *レンズフレア* //
+	// [16 bytes] レンズフレア設定
 	int32_t isLensFlare;
 	int32_t lensFlareGhostCount;
 	float lensFlareGhostDispersal;
 	float lensFlareHaloWidth;
 
+	// [16 bytes] ACES・色収差設定
 	int32_t isACES;
 	float caIntensity;
-	Vector2 pad5;
+	Vector2 pad5;           // 8 bytes
 
-	// *モーションブラー* //
-	int32_t isMotionBlur; // ★ ズレていると、ここに別のデータ(0)が入り込んでしまいます
-	int32_t motionBlurSamples;
+	// [16 bytes] モーションブラー設定
+	int32_t isMotionBlur;
+	int32_t motionBlurSamples; // ★正常な回数が読み込まれ、GPUクラッシュが直ります
 	float motionBlurScale;
 	float pad6;
 
-	// 色収差
-	int isFullScreenCA; // 画面全体の色収差ON/OFF
-	float fullScreenCAIntensity; // 画面全体の色収差の強さ
-	// ビネット
-	int isVignette;
+	// [16 bytes] 画面エフェクトフラグ群
+	int32_t isFullScreenCA;
+	float fullScreenCAIntensity;
+	int32_t isVignette;
 	float vignetteIntensity;
 
-	Vector3 vignetteColor;
+	// [16 bytes] ビネット色 & ガウシアンフラグ
+	Vector3 vignetteColor;    // 12 bytes
+	int32_t isGaussianFilter; // 4 bytes
 
-	// ガウシアンフィルタ
-	int isGaussianFilter;
-	float gaussianSigma; // ぼかしの強さ（例: 1.0f ～ 10.0f など大きくしても線が出ません）
+	// [16 bytes] ガウシアン設定 & アウトライン設定
+	float gaussianSigma;    // 4 bytes
+	int32_t isOutline;      // 4 bytes
+	float outlineThreshold; // 4 bytes
+	float pad7;             // 4 bytes (隙間をピッタリ埋めるパディング)
 
-	Vector2 pad7;
+	// [16 bytes] アウトライン色
+	Vector4 outlineColor;   // 16 bytes
 
 };
 
@@ -178,6 +192,11 @@ public:
 	// ガウシアンフィルタ
 	void SetGaussianFilter(bool isGaussianFilter) { effectData->isGaussianFilter = isGaussianFilter; }
 	void SetGaussianSigma(float gaussianSigma) { effectData->gaussianSigma = gaussianSigma; }
+	// アウトライン
+	void SetOutline(bool isOutline) { effectData->isOutline = isOutline; }
+	void SetOutlineThreshold(float outlineThreshold) { effectData->outlineThreshold = outlineThreshold; }
+	void SetOutlineColor(const Vector4& color) { effectData->outlineColor = color; }
+
 
 	// ダメージエフェクト
 	void SetDamageEffectRatio(float ratio) { damageEffectRatio_ = ratio; }

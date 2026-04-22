@@ -185,6 +185,10 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, WindowAPI* windowAPI, SrvMa
 	// ガウシアンフィルタ
 	effectData->isGaussianFilter = false; // ガウシアンフィルタON/OFF
 	effectData->gaussianSigma = 1.0f; // ガウシアンフィルタのぼかしの強さ
+	// アウトライン
+	effectData->isOutline = false; // アウトラインON/OFF
+	effectData->outlineThreshold = 0.1f; // エッジ判定の閾値
+	effectData->outlineColor = { 0.0f,0.0f,0.0f,1.0f }; // エッジの色
 
 	effectData->intensity = 1.0f;
 
