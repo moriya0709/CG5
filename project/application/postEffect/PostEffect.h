@@ -102,8 +102,14 @@ struct EffectData {
 	Vector3 vignetteColor;    // 12 bytes
 	int32_t isGaussianFilter; // 4 bytes
 
+	// [16 bytes] ガウシアン設定 & アウトライン設定
 	float gaussianSigma;    // 4 bytes
-	Vector2 pad7;             // 4 bytes (隙間をピッタリ埋めるパディング)
+	int32_t isOutline;      // 4 bytes
+	float outlineThreshold; // 4 bytes
+	float pad7;             // 4 bytes (隙間をピッタリ埋めるパディング)
+
+	// [16 bytes] アウトライン色
+	Vector4 outlineColor;   // 16 bytes
 
 };
 
@@ -186,6 +192,11 @@ public:
 	// ガウシアンフィルタ
 	void SetGaussianFilter(bool isGaussianFilter) { effectData->isGaussianFilter = isGaussianFilter; }
 	void SetGaussianSigma(float gaussianSigma) { effectData->gaussianSigma = gaussianSigma; }
+	// アウトライン
+	void SetOutline(bool isOutline) { effectData->isOutline = isOutline; }
+	void SetOutlineThreshold(float outlineThreshold) { effectData->outlineThreshold = outlineThreshold; }
+	void SetOutlineColor(const Vector4& color) { effectData->outlineColor = color; }
+
 
 	// ダメージエフェクト
 	void SetDamageEffectRatio(float ratio) { damageEffectRatio_ = ratio; }
