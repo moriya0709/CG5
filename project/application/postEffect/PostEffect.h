@@ -236,7 +236,6 @@ private:
 
 	// クリアカラー
 	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
-	D3D12_RESOURCE_STATES currentState_;
 
 	// *エフェクト切り換え用* //
 	// バッファリソース
@@ -283,12 +282,10 @@ private:
 		UINT srvIndex
 	);
 
-	// リソースバリアの発行
-	void Transition(D3D12_RESOURCE_STATES newState);
 	// バックバッファを指定の状態に遷移
 	void TransitionBackBuffer(D3D12_RESOURCE_STATES newState);
 
-	// --- リソースの状態を切り替える便利関数 ---
+	// リソースの状態を切り替え
 	void TransitionResource(ID3D12Resource* resource, D3D12_RESOURCE_STATES before, D3D12_RESOURCE_STATES after);
 
 	// ルートシグネイチャ生成
