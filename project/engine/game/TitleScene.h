@@ -48,7 +48,7 @@ private:
 
 
 	// 放射線ブラー
-	bool isRadialBlur = false;
+	bool isRadialBlur = true;
 	Vector2 blurCenter = { 0.5f,0.5f };
 	float blurWidth = 0.01f;
 	int blurSamples = 10;
@@ -99,11 +99,11 @@ private:
 	Vector3 vignetteColor = { 1.0f, 0.0f, 0.0f }; // ビネットの色
 
 	// ガウシアンフィルタ
-	bool isGaussianFilter = true;
+	bool isGaussianFilter = false;
 	float gaussianSigma = 2.0f;
 
 	// アウトライン
-	bool isOutline = true;
+	bool isOutline = false;
 	float outlineThreshold = 0.001f;
 	Vector4 outlineColor = { 1.0f, 0.0f, 0.0f, 1.0f };
 
