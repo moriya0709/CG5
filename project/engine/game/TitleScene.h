@@ -118,6 +118,9 @@ private:
 	Vector3 dissolveNoiseColor;
 	Vector3 dissolveEdgeColor;
 
+	// ランダムノイズ
+	bool isRandomNoise = false;
+
 
 	// レイマーチング
 	//float rayMarchingTime = 0.0f; ;

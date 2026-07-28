@@ -38,7 +38,7 @@ void TitleScene::Update() {
 
 #pragma region ポストエフェクト
 	// *ポストエフェクト* //
-	//PostEffect::GetInstance()->Update(camera.get());
+	PostEffect::GetInstance()->Update(camera.get());
 
 	// 反転
 	PostEffect::GetInstance()->SetInversion(isInversion);
@@ -100,6 +100,8 @@ void TitleScene::Update() {
 	PostEffect::GetInstance()->SetDissolveNoiseScale(dissolveNoiseScale);
 	PostEffect::GetInstance()->SetDissolveNoiseColor(dissolveNoiseColor);
 	PostEffect::GetInstance()->SetDissolveEdgeColor(dissolveEdgeColor);
+	// ランダムノイズ
+	PostEffect::GetInstance()->SetRandomNoise(isRandomNoise);
 
 #pragma endregion
 
@@ -273,6 +275,11 @@ void TitleScene::Update() {
 			ImGui::ColorEdit3("dissolveNoiseColor", &dissolveNoiseColor.x);
 			ImGui::ColorEdit3("dissolveEdgeColor", &dissolveEdgeColor.x);
 		}
+		ImGui::TreePop();
+	}
+	// ランダムノイズ
+	if (ImGui::TreeNode("RandomNoise")) {
+		ImGui::Checkbox("OnOff", &isRandomNoise);
 		ImGui::TreePop();
 	}
 

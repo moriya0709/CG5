@@ -15,6 +15,7 @@
 #include "Outline.hlsli"
 #include "BoxFilter.hlsli"
 #include "Dissolve.hlsli"
+#include "RandomNoise.hlsli"
 
 //* 上記のファイルで何故か日本語が使えない *//
 
@@ -158,6 +159,10 @@ struct EffectData
     float3 dissolveEdgeColor;   // エッジの色
     float pad15;
     
+    // ランダムノイズ
+    int isRandomNoise;  // ON/OFF
+    float3 pad16;
+    
 };
 ConstantBuffer<EffectData> gEffectData : register(b0);
 
@@ -248,6 +253,12 @@ float4 main(VSOutput input) : SV_TARGET
         if (gEffectData.isDissolve)
         {
             color = Dissolve(color, gEffectData.dissolveThreshold, gEffectData.dissolveEdgeWidth, gEffectData.dissolveNoiseColor, gEffectData.dissolveEdgeColor, input.uv, gEffectData.dissolveNoiseScale);
+        }
+        
+        // ランダムノイズ
+        if (gEffectData.isRandomNoise)
+        {
+            color = RandomNoise(input.uv, gEffectData.time);
         }
         
         // フルスクリーン色収差

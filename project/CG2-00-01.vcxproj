@@ -213,6 +213,7 @@
     <None Include="Resource\shaders\postEffect\Pinch.hlsli" />
     <None Include="Resource\shaders\postEffect\PostEffect.hlsli" />
     <None Include="Resource\shaders\postEffect\RadialBlur.hlsli" />
+    <None Include="Resource\shaders\postEffect\RandomNoise.hlsli" />
     <None Include="Resource\shaders\postEffect\SpeedDistortion.hlsli" />
     <None Include="Resource\shaders\postEffect\Vignette.hlsli" />
     <None Include="Resource\shaders\Sprite.hlsli" />

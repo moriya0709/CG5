@@ -206,7 +206,8 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, WindowAPI* windowAPI, SrvMa
 	effectData->dissolveNoiseScale = 10.0f;					// ノイズの細かさ
 	effectData->dissolveNoiseColor = { 1.0f, 0.0f, 0.0f };	// 境界線の色
 	effectData->dissolveEdgeColor = { 1.0f, 0.0f, 0.0f };	// 境界線の色
-
+	// ランダムノイズ
+	effectData->isRandomNoise = false;	// ON/OFF
 
 
 	effectData->intensity = 1.0f;	// ポストエフェクト全体の強さ
@@ -263,9 +264,10 @@ void PostEffect::Update(Camera* camera) {
 		}
 	}
 
-	// 集中線のアニメーション制御
-	if (effectData->isConcentrationLines) {
-		effectData->time += 1.0f / 60.0f;
+	// アニメーション制御
+	effectData->time += 1.0f / 60.0f;
+	if (effectData->time >= 1.0f) {
+		effectData->time = 0.0f;
 	}
 
 }
