@@ -201,6 +201,7 @@
     <None Include="Resource\shaders\postEffect\BoxFilter.hlsli" />
     <None Include="Resource\shaders\postEffect\CommonFunctions.hlsli" />
     <None Include="Resource\shaders\postEffect\ConcentrationLines.hlsli" />
+    <None Include="Resource\shaders\postEffect\Dissolve.hlsli" />
     <None Include="Resource\shaders\postEffect\DistanceFog.hlsli" />
     <None Include="Resource\shaders\postEffect\DoF.hlsli" />
     <None Include="Resource\shaders\postEffect\Grayscale.hlsli" />

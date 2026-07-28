@@ -195,6 +195,19 @@ void PostEffect::Initialize(DirectXCommon* dxCommon, WindowAPI* windowAPI, SrvMa
 	effectData->pinchStrength = 0.5f;			// 歪みの強さ
 	effectData->pinchCenter = { 0.5f, 0.5f };	// 歪みの中心
 	effectData->pinchRadius = 0.5f;				// 歪みの半径
+	// アウトライン
+	effectData->isOutline = false;						// ON/OFF
+	effectData->outlineThreshold = 0.1f;				// 境界値
+	effectData->outlineColor = { 1.0f,0.0f,0.0f,1.0f };	// 色
+	// ディゾルブ
+	effectData->isDissolve = false;							// ON/OFF
+	effectData->dissolveThreshold = 0.0f;					// 進行度
+	effectData->dissolveEdgeWidth = 0.05f;					// 境界線の幅
+	effectData->dissolveNoiseScale = 10.0f;					// ノイズの細かさ
+	effectData->dissolveNoiseColor = { 1.0f, 0.0f, 0.0f };	// 境界線の色
+	effectData->dissolveEdgeColor = { 1.0f, 0.0f, 0.0f };	// 境界線の色
+
+
 
 	effectData->intensity = 1.0f;	// ポストエフェクト全体の強さ
 
