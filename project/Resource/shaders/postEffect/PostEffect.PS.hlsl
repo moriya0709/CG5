@@ -12,6 +12,8 @@
 #include "Pinch.hlsli"
 #include "ConcentrationLines.hlsli"
 #include "Vignette.hlsli"
+#include "Outline.hlsli"
+#include "BoxFilter.hlsli"
 
 //* 上記のファイルで何故か日本語が使えない *//
 
@@ -100,10 +102,14 @@ struct EffectData
     int isVignette; // ビネットのON/OFF
     float vignetteIntensity; // ビネットの強さ
     
+    float3 vignetteColor;   // 色
+    float pad7;
+    
+    
     // スピードディストーション
     int isSpeedDistortion; // スピードディストーションのON/OFF
     float speedDistortionStrength; // 歪みの強さ
-    float2 pad7; // アライメント調整用
+    float2 pad8; // アライメント調整用
     
     // 集中線
     int isConcentrationLines; // ON/OFF
@@ -121,14 +127,20 @@ struct EffectData
     float2 pinchCenter; // 歪みの中心 (通常 0.5, 0.5)
 
     float pinchRadius; // 歪みが影響する半径
-    float3 pad8;
+    float3 pad9;
     
     // モノクロ
     int isTwoColor; // 二値化
     float threshold; // 白と黒の境界値 (0.0~1.0)
     float contrast; // コントラストの強さ
-    float pad9;
+    float pad10;
     
+    // アウトライン
+    int isOutline;
+    float outlineThreshold;
+    float2 pad11;
+    
+    float4 outlineColor;
     
 };
 ConstantBuffer<EffectData> gEffectData : register(b0);
@@ -210,6 +222,9 @@ float4 main(VSOutput input) : SV_TARGET
             color = Pinch(color, gEffectData.pinchStrength, gEffectData.pinchCenter, gEffectData.pinchRadius, input.uv, gCurrentTexture, gSampler);
         }
         
+        // 平滑化
+        
+        
         // フルスクリーン色収差
         if (gEffectData.isFullScreenCA)
         {
@@ -227,7 +242,7 @@ float4 main(VSOutput input) : SV_TARGET
         // ビネット
         if (gEffectData.isVignette)
         {
-            color.rgb = Vignette(color, gEffectData.vignetteIntensity, input.uv);
+            color.rgb = Vignette(color, gEffectData.vignetteIntensity, gEffectData.vignetteColor,input.uv);
         }
 
         // ディスタンスフォグ
@@ -264,6 +279,12 @@ float4 main(VSOutput input) : SV_TARGET
             color.rgb = Inversion(color);
         }
 
+        // アウトライン
+        if (gEffectData.isOutline)
+        {
+            color.rgb = Outline(color, gEffectData.outlineThreshold, gEffectData.outlineColor, input.uv, gDepthTexture, gSampler);
+        }
+        
         color.rgb *= gEffectData.intensity;
 
         // ACESトーンマッピング
