@@ -75,22 +75,6 @@
     <ClCompile Include="application\trailEffect\TrailEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resource\shaders\PostEffect.PS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Development|x64'">Pixel</ShaderType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
-    <FxCompile Include="Resource\shaders\PostEffect.VS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Development|x64'">Vertex</ShaderType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </FxCompile>
     <FxCompile Include="Resource\shaders\Outline.PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -125,6 +109,16 @@
     <FxCompile Include="Resource\shaders\Particle.VS.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\postEffect\PostEffect.PS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\postEffect\PostEffect.VS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resource\shaders\Sprite.PS.hlsl">
@@ -193,7 +187,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resource\shaders\PostEffect.hlsli" />
     <None Include="Resource\shaders\Outline.hlsli" />
     <None Include="Resource\shaders\Object3d.hlsli">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
@@ -204,6 +197,23 @@
       </ExcludedFromBuild>
     </None>
     <None Include="Resource\shaders\Particle.hlsli" />
+    <None Include="Resource\shaders\postEffect\Bloom.hlsli" />
+    <None Include="Resource\shaders\postEffect\BoxFilter.hlsli" />
+    <None Include="Resource\shaders\postEffect\CommonFunctions.hlsli" />
+    <None Include="Resource\shaders\postEffect\ConcentrationLines.hlsli" />
+    <None Include="Resource\shaders\postEffect\DistanceFog.hlsli" />
+    <None Include="Resource\shaders\postEffect\DoF.hlsli" />
+    <None Include="Resource\shaders\postEffect\Grayscale.hlsli" />
+    <None Include="Resource\shaders\postEffect\HeightFog.hlsli" />
+    <None Include="Resource\shaders\postEffect\Inversion.hlsli" />
+    <None Include="Resource\shaders\postEffect\LensFlare.hlsli" />
+    <None Include="Resource\shaders\postEffect\MotionBlur.hlsli" />
+    <None Include="Resource\shaders\postEffect\Outline.hlsli" />
+    <None Include="Resource\shaders\postEffect\Pinch.hlsli" />
+    <None Include="Resource\shaders\postEffect\PostEffect.hlsli" />
+    <None Include="Resource\shaders\postEffect\RadialBlur.hlsli" />
+    <None Include="Resource\shaders\postEffect\SpeedDistortion.hlsli" />
+    <None Include="Resource\shaders\postEffect\Vignette.hlsli" />
     <None Include="Resource\shaders\Sprite.hlsli" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -302,7 +312,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>C:\CG2-00-01\externals\DirectXTex;$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\audio;$(ProjectDir)engine\base;$(ProjectDir)engine\io;$(ProjectDir)engine\math;$(ProjectDir)engine\game;$(ProjectDir)engine\scene;$(ProjectDir)engine\camera;$(ProjectDir)application\postEffect;$(ProjectDir)application\railCamera;$(ProjectDir)application\\rayMarching</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\CG2-00-01\externals\DirectXTex;$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\audio;$(ProjectDir)engine\base;$(ProjectDir)engine\io;$(ProjectDir)engine\math;$(ProjectDir)engine\game;$(ProjectDir)engine\scene;$(ProjectDir)engine\camera;$(ProjectDir)application\postEffect;$(ProjectDir)application\railCamera;$(ProjectDir)application\rayMarching;$(ProjectDir)application\trailEffect</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -330,7 +340,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>C:\CG2-00-01\externals\DirectXTex;$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\audio;$(ProjectDir)engine\base;$(ProjectDir)engine\io;$(ProjectDir)engine\math;$(ProjectDir)engine\game;$(ProjectDir)engine\scene;$(ProjectDir)engine\camera;$(ProjectDir)application\postEffect;$(ProjectDir)application\railCamera;$(ProjectDir)application\\rayMarching</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\CG2-00-01\externals\DirectXTex;$(ProjectDir);$(ProjectDir)engine\2d;$(ProjectDir)engine\3d;$(ProjectDir)engine\audio;$(ProjectDir)engine\base;$(ProjectDir)engine\io;$(ProjectDir)engine\math;$(ProjectDir)engine\game;$(ProjectDir)engine\scene;$(ProjectDir)engine\camera;$(ProjectDir)application\postEffect;$(ProjectDir)application\railCamera;$(ProjectDir)application\rayMarching;$(ProjectDir)application\trailEffect</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>

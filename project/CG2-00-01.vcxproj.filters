@@ -105,6 +105,9 @@
     <Filter Include="ヘッダー ファイル\application\trailEffect">
       <UniqueIdentifier>{a30b29c1-45b4-48ab-8ae8-9ff2eb2da2fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダー ファイル\postEffect">
+      <UniqueIdentifier>{ef293c1f-e3fb-468b-97aa-5dec03cf82f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -250,17 +253,17 @@
     <FxCompile Include="Resource\shaders\Particle.VS.hlsl">
       <Filter>シェーダー ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resource\shaders\PostEffect.PS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resource\shaders\PostEffect.VS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
-    </FxCompile>
     <FxCompile Include="Resource\shaders\Sprite.PS.hlsl">
       <Filter>シェーダー ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resource\shaders\Sprite.VS.hlsl">
       <Filter>シェーダー ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\postEffect\PostEffect.PS.hlsl">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Resource\shaders\postEffect\PostEffect.VS.hlsl">
+      <Filter>シェーダー ファイル\postEffect</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -412,11 +415,59 @@
     <None Include="Resource\shaders\Particle.hlsli">
       <Filter>シェーダー ファイル</Filter>
     </None>
-    <None Include="Resource\shaders\PostEffect.hlsli">
-      <Filter>シェーダー ファイル</Filter>
-    </None>
     <None Include="Resource\shaders\Sprite.hlsli">
       <Filter>シェーダー ファイル</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\Bloom.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\CommonFunctions.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\ConcentrationLines.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\DistanceFog.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\DoF.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\Grayscale.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\HeightFog.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\Inversion.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\LensFlare.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\MotionBlur.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\Outline.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\Pinch.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\PostEffect.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\RadialBlur.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\SpeedDistortion.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\Vignette.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
+    <None Include="Resource\shaders\postEffect\BoxFilter.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
     </None>
   </ItemGroup>
 </Project>

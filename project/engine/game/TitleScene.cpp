@@ -87,9 +87,6 @@ void TitleScene::Update() {
 	PostEffect::GetInstance()->SetVignette(isVignette);
 	PostEffect::GetInstance()->SetVignetteIntensity(vignetteIntensity);
 	PostEffect::GetInstance()->SetVignetteColor(vignetteColor);
-	// ガウシアンフィルタ
-	PostEffect::GetInstance()->SetGaussianFilter(isGaussianFilter);
-	PostEffect::GetInstance()->SetGaussianSigma(gaussianSigma);
 	// アウトライン
 	PostEffect::GetInstance()->SetOutline(isOutline);
 	PostEffect::GetInstance()->SetOutlineThreshold(outlineThreshold);
