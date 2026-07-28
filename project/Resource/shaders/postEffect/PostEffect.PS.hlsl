@@ -14,6 +14,7 @@
 #include "Vignette.hlsli"
 #include "Outline.hlsli"
 #include "BoxFilter.hlsli"
+#include "Dissolve.hlsli"
 
 //* 上記のファイルで何故か日本語が使えない *//
 
@@ -136,15 +137,26 @@ struct EffectData
     float pad10;
     
     // アウトライン
-    int isOutline;
-    float outlineThreshold;
+    int isOutline;  // ON/OFF
+    float outlineThreshold; // 境界値
     float2 pad11;
     
-    float4 outlineColor;
+    float4 outlineColor;    // 色
     
     // 平滑化
-    int isBoxFilter;
+    int isBoxFilter;   // ON/OFF
     float3 pad12;
+    
+    // ディゾルブ
+    int isDissolve;     // ON/OFF
+    float dissolveThreshold;    // 境界値
+    float dissolveEdgeWidth;    // エッジの幅
+    float dissolveNoiseScale;   // ノイズの細かさ
+    
+    float3 dissolveNoiseColor; // ノイズの色
+    float pad14;
+    float3 dissolveEdgeColor;   // エッジの色
+    float pad15;
     
 };
 ConstantBuffer<EffectData> gEffectData : register(b0);
@@ -230,6 +242,12 @@ float4 main(VSOutput input) : SV_TARGET
         if (gEffectData.isBoxFilter)
         {
             color = BoxFilter5x5(input.uv, gCurrentTexture, gSampler);
+        }
+        
+        // ディゾルブ
+        if (gEffectData.isDissolve)
+        {
+            color = Dissolve(color, gEffectData.dissolveThreshold, gEffectData.dissolveEdgeWidth, gEffectData.dissolveNoiseColor, gEffectData.dissolveEdgeColor, input.uv, gEffectData.dissolveNoiseScale);
         }
         
         // フルスクリーン色収差

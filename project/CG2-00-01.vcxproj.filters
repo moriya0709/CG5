@@ -469,5 +469,8 @@
     <None Include="Resource\shaders\postEffect\BoxFilter.hlsli">
       <Filter>シェーダー ファイル\postEffect</Filter>
     </None>
+    <None Include="Resource\shaders\postEffect\Dissolve.hlsli">
+      <Filter>シェーダー ファイル\postEffect</Filter>
+    </None>
   </ItemGroup>
 </Project>

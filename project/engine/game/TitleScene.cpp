@@ -93,6 +93,13 @@ void TitleScene::Update() {
 	PostEffect::GetInstance()->SetOutlineColor(outlineColor);
 	// 平滑化
 	PostEffect::GetInstance()->SetBoxFilter(isBoxFilter);
+	// ディゾルブ
+	PostEffect::GetInstance()->SetDissolve(isDissolve);
+	PostEffect::GetInstance()->SetDissolveThreshold(dissolveThreshold);
+	PostEffect::GetInstance()->SetDissolveEdgeWidth(dissolveEdgeWidth);
+	PostEffect::GetInstance()->SetDissolveNoiseScale(dissolveNoiseScale);
+	PostEffect::GetInstance()->SetDissolveNoiseColor(dissolveNoiseColor);
+	PostEffect::GetInstance()->SetDissolveEdgeColor(dissolveEdgeColor);
 
 #pragma endregion
 
@@ -254,6 +261,18 @@ void TitleScene::Update() {
 	// 平滑化
 	if (ImGui::TreeNode("BoxFilter")) {
 		ImGui::Checkbox("OnOff", &isBoxFilter);
+		ImGui::TreePop();
+	}
+	// ディゾルブ
+	if (ImGui::TreeNode("Dissolve")) {
+		ImGui::Checkbox("OnOff", &isDissolve);
+		if (isDissolve) {
+			ImGui::DragFloat("dissolveThreshold", &dissolveThreshold, 0.01f, 0.0f, 10.0f);
+			ImGui::DragFloat("dissolveEdgeWidth", &dissolveEdgeWidth,0.001f,0.0f,1.0f);
+			ImGui::DragFloat("dissolveNoiseScale", &dissolveNoiseScale,0.1f,0.0f,50.0f);
+			ImGui::ColorEdit3("dissolveNoiseColor", &dissolveNoiseColor.x);
+			ImGui::ColorEdit3("dissolveEdgeColor", &dissolveEdgeColor.x);
+		}
 		ImGui::TreePop();
 	}
 

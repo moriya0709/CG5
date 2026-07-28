@@ -110,6 +110,14 @@ private:
 	// 平滑化
 	bool isBoxFilter = false;
 
+	// ディゾルブ
+	bool isDissolve = false;
+	float dissolveThreshold;
+	float dissolveEdgeWidth;
+	float dissolveNoiseScale;
+	Vector3 dissolveNoiseColor;
+	Vector3 dissolveEdgeColor;
+
 
 	// レイマーチング
 	//float rayMarchingTime = 0.0f; ;
