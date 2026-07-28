@@ -147,6 +147,10 @@ struct EffectData {
 	Vector3 dissolveEdgeColor;			// エッジの色
 	float pad15;
 
+	// ランダムノイズ
+	int isRandomNoise;					// ON/OFF
+	Vector3 pad16;
+
 };
 
 
@@ -260,6 +264,9 @@ public:
 	void SetDissolveNoiseScale(float dissolveNoiseScale) { effectData->dissolveNoiseScale = dissolveNoiseScale; }
 	void SetDissolveNoiseColor(Vector3 dissolveNoiseColor) { effectData->dissolveNoiseColor = dissolveNoiseColor; }
 	void SetDissolveEdgeColor(Vector3 dissolveEdgeColor) { effectData->dissolveEdgeColor = dissolveEdgeColor; }
+	// ランダムノイズ
+	void SetRandomNoise(bool isRandomNoise) { effectData->isRandomNoise = isRandomNoise; }
+
 
 	// エフェクトの強さ
 	void SetIntensity(float intensity) { effectData->intensity = intensity; }
