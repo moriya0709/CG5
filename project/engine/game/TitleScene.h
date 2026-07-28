@@ -107,6 +107,9 @@ private:
 	float outlineThreshold = 0.001f;
 	Vector4 outlineColor = { 1.0f, 0.0f, 0.0f, 1.0f };
 
+	// 平滑化
+	bool isBoxFilter = false;
+
 
 	// レイマーチング
 	//float rayMarchingTime = 0.0f; ;

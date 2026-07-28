@@ -142,6 +142,10 @@ struct EffectData
     
     float4 outlineColor;
     
+    // 平滑化
+    int isBoxFilter;
+    float3 pad12;
+    
 };
 ConstantBuffer<EffectData> gEffectData : register(b0);
 
@@ -223,7 +227,10 @@ float4 main(VSOutput input) : SV_TARGET
         }
         
         // 平滑化
-        
+        if (gEffectData.isBoxFilter)
+        {
+            color = BoxFilter5x5(input.uv, gCurrentTexture, gSampler);
+        }
         
         // フルスクリーン色収差
         if (gEffectData.isFullScreenCA)

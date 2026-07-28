@@ -132,6 +132,10 @@ struct EffectData {
 
 	Vector4 outlineColor;				// 色
 
+	// 平滑化
+	int isBoxFilter;
+	Vector3 pad12;
+
 };
 
 
@@ -236,7 +240,10 @@ public:
 	void SetOutline(bool isOutline) { effectData->isOutline = isOutline; }
 	void SetOutlineThreshold(float outlineThreshold) { effectData->outlineThreshold = outlineThreshold; }
 	void SetOutlineColor(Vector4 outlineColor) { effectData->outlineColor = outlineColor; }
-	
+	// 平滑化
+	void SetBoxFilter(bool isBoxFilter) { effectData->isBoxFilter = isBoxFilter; }
+
+
 	// エフェクトの強さ
 	void SetIntensity(float intensity) { effectData->intensity = intensity; }
 

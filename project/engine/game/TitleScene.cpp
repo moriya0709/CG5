@@ -91,6 +91,8 @@ void TitleScene::Update() {
 	PostEffect::GetInstance()->SetOutline(isOutline);
 	PostEffect::GetInstance()->SetOutlineThreshold(outlineThreshold);
 	PostEffect::GetInstance()->SetOutlineColor(outlineColor);
+	// 平滑化
+	PostEffect::GetInstance()->SetBoxFilter(isBoxFilter);
 
 #pragma endregion
 
@@ -240,14 +242,6 @@ void TitleScene::Update() {
 		}
 		ImGui::TreePop();
 	}
-	// ガウシアンフィルタ
-	if (ImGui::TreeNode("GaussianFilter")) {
-		ImGui::Checkbox("OnOff", &isGaussianFilter);
-		if (isGaussianFilter) {
-			ImGui::DragFloat("gaussianSigma", &gaussianSigma, 0.01f, 0.0f, 10.0f);
-		}
-		ImGui::TreePop();
-	}
 	// アウトライン
 	if (ImGui::TreeNode("Outline")) {
 		ImGui::Checkbox("OnOff", &isOutline);
@@ -255,6 +249,11 @@ void TitleScene::Update() {
 			ImGui::DragFloat("outlineThreshold", &outlineThreshold, 0.0001f, 0.0f, 0.05f);
 			ImGui::ColorEdit4("outlineColor", &outlineColor.x);
 		}
+		ImGui::TreePop();
+	}
+	// 平滑化
+	if (ImGui::TreeNode("BoxFilter")) {
+		ImGui::Checkbox("OnOff", &isBoxFilter);
 		ImGui::TreePop();
 	}
 
