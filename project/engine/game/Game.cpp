@@ -102,7 +102,7 @@ void Game::Draw() {
 	PostEffect::GetInstance()->PreDraw();
 
 	// レイマーチング描画
-	//RayMarching::GetInstance()->Draw();
+	RayMarching::GetInstance()->Draw();
 
 	// シーンマネージャー描画(3D)
 	SceneManager::GetInstance()->Draw3D();
@@ -110,7 +110,7 @@ void Game::Draw() {
 	// パーティクル描画
 	ParticleManager::GetInstance()->Draw();
 	// トレイルエフェクト描画
-	//TrailEffectManager::GetInstance()->RenderAll();
+	TrailEffectManager::GetInstance()->RenderAll();
 
 
 	// ポストエフェクト描画
