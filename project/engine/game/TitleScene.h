@@ -38,17 +38,25 @@ private:
 	   { 0.0f, 0.0f, 0.0f }, // rotate
 	   { 0.0f, 0.0f, -5.0f } // translate
 	};
+	Vector3 objectPos = { 0.0f,0.0f,10.0f };
+	float vector = 0.1f;
 
 	// *ポストエフェクト* //
+
+	
+	int effectType = 0;
 
 	// 反転
 	bool isInversion = false;
 	// グレースケール
 	bool isGrayscale = false;
+	bool isTwoColor = false;
+	float threshold = 0.5f;
+	float contrast = 1.0f;
 
 
 	// 放射線ブラー
-	bool isRadialBlur = true;
+	bool isRadialBlur = false;
 	Vector2 blurCenter = { 0.5f,0.5f };
 	float blurWidth = 0.01f;
 	int blurSamples = 10;
@@ -78,7 +86,7 @@ private:
 	float bloomBlurRadius = 1.0f;
 
 	// レンズフレア
-	bool isLensFlare = false;           // レンズフレアのON/OFF
+	bool isLensFlare = true;           // レンズフレアのON/OFF
 	int lensFlareGhostCount = 6;   // ゴーストの数（例: 4～8）
 	float lensFlareHaloWidth = 0.57f;      // ヘイロー（輪っか）の大きさ
 	bool isACES = false;                 // ACESトーンマッピングをONにする
@@ -91,17 +99,30 @@ private:
 
 	// 色収差
 	bool isFullScreenCA = false; // 画面全体の色収差ON/OFF
-	float fullScreenCAIntensity = 0.02f; // 画面全体の色収差の強さ
+	float fullScreenCAIntensity = 0.06f; // 画面全体の色収差の強さ
 
 	// ビネット
 	bool isVignette = false; // ビネットON/OFF
 	float vignetteIntensity = 1.0f; // ビネットの強さ
 	Vector3 vignetteColor = { 1.0f, 0.0f, 0.0f }; // ビネットの色
+	
+	// スピードディストーション
+	bool isSpeedDistortion = false;
+	float strength = 10.0f;
 
-	// ガウシアンフィルタ
-	bool isGaussianFilter = false;
-	float gaussianSigma = 2.0f;
+	// 集中線
+	bool isConcentrationLines = false;					// ON/OFF
+	float concentrationLineIntensity = 0.3f;			// 線の濃さ
+	Vector2 concentrationLineCenter = { 0.5f, 0.5f };	// 線の中心
+	float concentrationLineDensity = 500.0f;				// 線の密度
+	float concentrationLineLength = 0.3f;				// 線の長さ
+	float concentrationLineSpeed = 100.0f;				// 線の速度
 
+	// ピンチエフェクト
+	bool isPinch = false;					// ON/OFF
+	float pinchStrength = 0.5f;				// 歪みの強さ
+	Vector2 pinchCenter = { 0.5f, 0.5f };	// 歪みの中心
+	float pinchRadius = 0.5f;				// 歪みの半径
 	// アウトライン
 	bool isOutline = false;
 	float outlineThreshold = 0.001f;
@@ -112,11 +133,11 @@ private:
 
 	// ディゾルブ
 	bool isDissolve = false;
-	float dissolveThreshold;
-	float dissolveEdgeWidth;
-	float dissolveNoiseScale;
-	Vector3 dissolveNoiseColor;
-	Vector3 dissolveEdgeColor;
+	float dissolveThreshold = 0.4f;
+	float dissolveEdgeWidth = 0.03f;
+	float dissolveNoiseScale = 10.0f;
+	Vector3 dissolveNoiseColor = {1.0f,1.0f,1.0f};
+	Vector3 dissolveEdgeColor = {0.0f,0.0f,0.0f};
 
 	// ランダムノイズ
 	bool isRandomNoise = false;
@@ -124,7 +145,7 @@ private:
 
 	// レイマーチング
 	//float rayMarchingTime = 0.0f; ;
-	Vector3 rayMarchingSunDir = { 0.3f, -0.5f, 0.2f };
+	Vector3 rayMarchingSunDir = { -0.07f, -0.05f, -1.0f };
 	float rayMarchingCloudCoverage = 0.00f;
 	float rayMarchingCloudBottom = 0.0f;
 	float rayMarchingCloudTop = 0.0f;
